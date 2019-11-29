@@ -27,15 +27,13 @@ import kotlin.system.exitProcess
             println("неверный формат")
             exitProcess(1)
         }
-        if (!regexp) {
-            word = "\\Q$word\\E"
-        }
         try {
-            val g = Grep(fileName, ignore)
-            if (invert) {
-                output(g.invert(word))
-            } else
-                output(g.regexp(word))
+            val g = Grep(fileName, ignore, regexp, invert)
+            output(g.search(word))
+  //          if (invert) {
+   //             output(g.invert(word))
+    //        } else
+    //            output(g.regexp(word))
         } catch (e: IllegalArgumentException) {
             println("неверный формат")
         }
