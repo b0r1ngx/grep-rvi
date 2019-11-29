@@ -1,3 +1,5 @@
+import kotlin.system.exitProcess
+
 //object Line {
 //    @JvmStatic
 //class Line {
@@ -5,8 +7,8 @@
         var invert = false
         var regexp = false
         var ignore = false
-        var fileName: String? = null
-        var word: String? = null
+        val fileName: String
+        var word: String
         for (i in 0 until args.size - 2) {
             when (args[i]) {
                 "-r" -> regexp = true
@@ -14,7 +16,7 @@
                 "-i" -> ignore = true
                 else -> {
                     println("неверный формат")
-                    //exitProcess
+                    exitProcess(1)
                 }
             }
         }
@@ -23,22 +25,17 @@
             fileName = args[args.size - 1]
         } else {
             println("неверный формат")
-            //exitProcess
+            exitProcess(1)
         }
         if (!regexp) {
             word = "\\Q$word\\E"
         }
         try {
-            val g = fileName?.let { Grep(it, ignore) }
-            if (word != null) {
-                if (invert) {
-                    output(g!!.invert(word))
-                } else
-                    output(g!!.regexp(word))
-            } else {
-                println("неверный формат")
-                //exitProcess
-            }
+            val g = Grep(fileName, ignore)
+            if (invert) {
+                output(g.invert(word))
+            } else
+                output(g.regexp(word))
         } catch (e: IllegalArgumentException) {
             println("неверный формат")
         }
@@ -47,7 +44,7 @@
 
     fun output(stringList: List<String>) {
         for (i in stringList) {
-            println("Строки: $i")
+            println(i)
         }
     }
 
