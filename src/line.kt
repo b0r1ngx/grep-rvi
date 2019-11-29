@@ -14,7 +14,7 @@
                 "-i" -> ignore = true
                 else -> {
                     println("неверный формат")
-                    //System.exit(1)
+                    //exitProcess
                 }
             }
         }
@@ -23,7 +23,7 @@
             fileName = args[args.size - 1]
         } else {
             println("неверный формат")
-            //System.exit(1)
+            //exitProcess
         }
         if (!regexp) {
             word = "\\Q$word\\E"
@@ -37,7 +37,7 @@
                     output(g!!.regexp(word))
             } else {
                 println("неверный формат")
-                //System.exit(1)
+                //exitProcess
             }
         } catch (e: IllegalArgumentException) {
             println("неверный формат")
@@ -50,4 +50,6 @@
             println("Строки: $i")
         }
     }
+
+    //inline fun exitProcess(status: Int): Nothing
 //}
